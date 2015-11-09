@@ -297,7 +297,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             RHS const& rhs
           , char const* rule_name
           , Iterator& first, Iterator const& last
-          , Context const& context, ActualAttribute& attr
+          , Context const& context, ActualAttribute&& attr
           , ExplicitAttrPropagation)
         {
             typedef traits::make_attribute<Attribute, ActualAttribute> make_attribute;
@@ -310,7 +310,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
             typedef typename make_attribute::value_type value_type;
             typedef typename transform::type transform_attr;
-            value_type made_attr = make_attribute::call(attr);
+            value_type made_attr = make_attribute::call(std::forward<ActualAttribute>(attr));
             transform_attr attr_ = transform::pre(made_attr);
 
             bool ok_parse
